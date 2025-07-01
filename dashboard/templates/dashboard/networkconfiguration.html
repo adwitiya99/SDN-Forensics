@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ONOS Network Configuration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+    }
+    .download {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background-color: #fff;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ONOS Network Configuration</h1>
+
+  <div class="download">
+    <a href="{% url 'download_networkconfiguration' %}" download="network_config.json">
+      <button>Download Raw JSON</button>
+    </a>
+  </div>
+
+  {% if config.devices %}
+  <h2>Devices and Classifiers</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Device ID</th>
+        <th>Ethernet Type</th>
+        <th>Target Queue</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for device_id, classifiers in config.devices.items %}
+        {% for classifier in classifiers %}
+          <tr>
+            <td>{{ device_id }}</td>
+            <td>{{ classifier.ethernet_type }}</td>
+            <td>{{ classifier.target_queue }}</td>
+          </tr>
+        {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No device configuration found.</p>
+{% endif %}
+
+
+</body>
+</html>

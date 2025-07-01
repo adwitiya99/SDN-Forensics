@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ONOS Activity Log</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #00ffff;
+    }
+
+    .search-bar {
+      margin-bottom: 1rem;
+      display: flex;
+      width: 100%;
+      max-width: 600px;
+      justify-content: center;
+    }
+
+    .search-bar input {
+      width: 80%;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .search-bar button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background-color: #00ffff;
+      color: #000;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .log-table {
+      width: 100%;
+      max-width: 90vw;
+      max-height: 70vh;
+      overflow-y: auto;
+      border-collapse: collapse;
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    .log-table table {
+      width: 100%;
+      border-spacing: 0;
+    }
+
+    .log-table th, .log-table td {
+      padding: 0.6rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #333;
+      white-space: pre-wrap;
+      font-family: Consolas, monospace;
+    }
+
+    .log-table th {
+      background-color: #2a2a2a;
+      color: #00ffff;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .log-table::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .log-table::-webkit-scrollbar-thumb {
+      background: #0ff;
+      border-radius: 10px;
+    }
+
+    .log-table::-webkit-scrollbar-track {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ONOS Activity Log</h1>
+
+  <div class="search-bar">
+    <input type="text" id="logSearch" placeholder="Search logs..." onkeyup="filterLogs()" />
+    <button onclick="filterLogs()">Search</button>
+  </div>
+
+  <div class="log-table" id="logTableWrapper">
+    <table id="logTable">
+      <thead>
+        <tr>
+          <th>Log Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for line in log_lines %}
+        <tr>
+          <td>{{ line }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function filterLogs() {
+      const input = document.getElementById("logSearch");
+      const filter = input.value.toLowerCase();
+      const rows = document.querySelectorAll("#logTable tbody tr");
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+      });
+    }
+  </script>
+
+</body>
+</html>

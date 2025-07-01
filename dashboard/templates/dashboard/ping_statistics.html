@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Ping Statistics & Entropy Analysis</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2rem;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .status {
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0.5rem 0 1.5rem;
+    }
+    .entropy-table {
+      width: 80%;
+      margin: 0 auto 2rem auto;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    .entropy-table th, .entropy-table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    .entropy-table th {
+      background: #333;
+      color: #fff;
+    }
+    ul {
+      max-width: 500px;
+      margin: auto;
+      list-style: none;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #ccc;
+    }
+    li {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .debug {
+      margin-top: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #eaeaea;
+      padding: 1rem;
+      border: 1px dashed #888;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Entropy-Based Traffic Analysis</h1>
+  <p class="status">Captured Protocol: <strong>{{ protocol }}</strong></p>
+
+    <table class="entropy-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Entropy</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for feature, entropy in entropy_scores.items %}
+        <tr>
+          <td>{{ feature }}</td>
+          <td>{{ entropy }}</td>
+          <td>
+            {% if entropy < 0.5 %}
+              Very Low – Single source or uniform values (Normal in test setup / Could be spoofed)
+            {% elif entropy < 1.5 %}
+              Medium – Low diversity
+            {% else %}
+              High – Diverse
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Unique Source IPs</h2>
+  {% if sources %}
+    <ul>
+      {% for ip in sources %}
+        <li>{{ ip }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p style="text-align:center;">No ICMP/TCP SYN source IPs detected.</p>
+  {% endif %}
+
+  <div class="debug">
+    <h3>Filtered Packet Debug Output</h3>
+    <pre>{{ debug_output }}</pre>
+  </div>
+
+</body>
+</html>

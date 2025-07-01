@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ONOS Port Statistics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background-color: #fff;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ONOS Port Statistics</h1>
+
+  {% if ports %}
+    {% for device_id, port_list in ports.items %}
+      <h2>Device: {{ device_id }}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Port Number</th>
+            <th>Enabled</th>
+            <th>Port Speed (bps)</th>
+            <th>Packets Received</th>
+            <th>Packets Sent</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for port in port_list %}
+          <tr>
+            <td>{{ port.port }}</td>
+            <td>{{ port.isEnabled }}</td>
+            <td>{{ port.portSpeed }}</td>
+            <td>{{ port.packetsReceived }}</td>
+            <td>{{ port.packetsSent }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endfor %}
+  {% else %}
+    <p>No port data available.</p>
+  {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!-- templates/dashboard/block_traffic.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Block/Unblock Traffic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        label, select, input, button {
+            margin-top: 10px;
+            display: block;
+        }
+        #custom-host {
+            display: none;
+        }
+    </style>
+    <script>
+    function toggleOtherInput() {
+        var selected = document.getElementById("host-select").value;
+        var otherDiv = document.getElementById("other-host-div");
+        if (selected === "other") {
+            otherDiv.style.display = "block";
+        } else {
+            otherDiv.style.display = "none";
+        }
+    }
+
+    // Handle back navigation from browser cache
+    window.onload = function () {
+        toggleOtherInput();
+    };
+</script>
+</head>
+<body>
+    <h2>Block/Unblock Host Communication</h2>
+    <h3>To block/unblock any traffic from a particular host to a particular device, choose their IDs below</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="host">Select Host:</label>
+        <select name="host" id="host-select" onchange="toggleOtherInput()">
+            {% for host in hosts %}
+                <option value="{{ host }}">{{ host }}</option>
+            {% endfor %}
+            <option value="other">Other (Enter IP manually)</option>
+        </select>
+
+        <div id="other-host-div" style="display: none; margin-top: 10px;">
+            <label for="other-host">Enter Host IP:</label>
+            <input type="text" name="other_host" id="other-host" placeholder="e.g., 10.0.0.99" />
+        </div>
+            
+
+        <label for="device">Select Device:</label>
+        <select name="device">
+            {% for device in devices %}
+                <option value="{{ device }}">{{ device }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="action">Action:</label>
+        <select name="action">
+            <option value="block">Block</option>
+            <option value="unblock">Unblock</option>
+        </select>
+
+        <button type="submit">Apply</button>
+    </form>
+
+    {% if response %}
+        <h3>{{ response.status }}</h3>
+        <pre>{{ response.message }}</pre>
+    {% endif %}
+</body>
+</html>

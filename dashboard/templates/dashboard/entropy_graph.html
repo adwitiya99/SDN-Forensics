@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Entropy & Threshold Graphs</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h2 { color: #333; }
+        img { border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h2>📊 Entropy and Dynamic Threshold</h2>
+    {% if error %}
+        <p style="color: red;">Error: {{ error }}</p>
+    {% else %}
+        <p><strong>Latest Entropy:</strong> {{ latest_entropy }}</p>
+        <p><strong>Latest Threshold:</strong> {{ latest_threshold }}</p>
+        <img src="data:image/png;base64,{{ image_base64 }}" alt="Entropy and Threshold Graphs"/>
+    {% endif %}
+</body>
+</html>

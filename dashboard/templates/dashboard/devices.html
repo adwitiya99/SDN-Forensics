@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ONOS Devices & Hosts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      background-color: #fff;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>ONOS Devices & Hosts</h1>
+
+  <h2>Network Devices (Switches)</h2>
+  {% if devices %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Available</th>
+          <th>Manufacturer</th>
+          <th>Hardware</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for device in devices %}
+        <tr>
+          <td>{{ device.id }}</td>
+          <td>{{ device.type }}</td>
+          <td>{{ device.available }}</td>
+          <td>{{ device.mfr }}</td>
+          <td>{{ device.hw }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No switches found.</p>
+  {% endif %}
+
+  <h2>Connected Hosts</h2>
+  {% if hosts %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>MAC</th>
+          <th>IP Address</th>
+          <th>Device ID</th>
+          <th>Port</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for host in hosts %}
+        <tr>
+          <td>{{ host.id }}</td>
+          <td>{{ host.mac }}</td>
+          <td>{{ host.ipAddresses.0 }}</td>
+          <td>{{ host.locations.0.elementId }}</td>
+          <td>{{ host.locations.0.port }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hosts found.</p>
+  {% endif %}
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SDN Forensics Dashboard</title>
+<style>
+  /* Full page background */
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    overflow: hidden;
+  }
+  .bg {
+    /* Replace URL with your preferred network image or keep this sample */
+    background-image: url('https://sectigostore.com/blog/wp-content/uploads/2022/03/cyber-security-and-digital-forensics-feature.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(0.6);
+    position: fixed;
+    width: 100%;
+    z-index: -1;
+  }
+  .centered {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  transform: translateY(-20%);
+  text-align: right;
+  max-width: 40%;
+}
+
+  h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  }
+  p {
+    font-size: 1.25rem;
+    margin: 0.25rem 0;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+  }
+
+  /* Dropdown Menu Styles */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-top: 2rem;
+  }
+  .dropbtn {
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  .dropbtn:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.85);
+  min-width: 180px;
+  max-height: 300px; /* <-- Set max height */
+  overflow-y: auto;   /* <-- Enable vertical scroll */
+  border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  margin-top: 8px;
+}
+
+  .dropdown-content.show {
+  display: block;
+}
+  .dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 1rem;
+  }
+  .dropdown-content a:hover {
+    background-color: rgba(255,255,255,0.2);
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="centered">
+  <h1>SDN Forensics</h1>
+  <p>Explore network insights and analytics below.</p>
+
+  <div class="dropdown" id="dropdown">
+  <button class="dropbtn" onclick="toggleDropdown()">Explore Data ▼</button>
+  <div class="dropdown-content" id="dropdownContent">
+    <a href="/devices/">Devices</a>
+    <a href="/ports/">Ports</a>
+    <a href="/flows/">Flows</a>
+    <a href="/applications/">Apps</a>
+    <a href="/networkconfiguration/">Network Configuration</a>
+    <a href="/activity_log/">Activity Log</a>    
+    <a href="/pingstats/">Ping Statistics</a>
+    <a href="/ddos_detection">DDoS Detection</a>
+    <a href="/entropy_graph">Entropy Graphs</a>
+    <a href="/port_control/">Port Control</a>
+    <a href="/block_traffic/">Block Traffic</a>
+    <!-- Add more items to test scroll -->
+  </div>
+</div>
+
+<script>
+  function toggleDropdown() {
+    document.getElementById("dropdownContent").classList.toggle("show");
+  }
+
+  // Close dropdown if clicking outside
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      for (let i = 0; i < dropdowns.length; i++) {
+        dropdowns[i].classList.remove('show');
+      }
+    }
+  };
+</script>
+
+
+</body>
+</html>
